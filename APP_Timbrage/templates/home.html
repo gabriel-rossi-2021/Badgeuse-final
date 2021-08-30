@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+    <h1>TCI ENGINNEERING</h1>
+        <div class="row">
+            <div class="col-md-12" style="display: flex;justify-content: space-between;flex-wrap: wrap;flex-direction: row;">
+                <div class="card border-info mb-3">
+                    <div class="card-header">Lien rapide</div>
+                        <div class="card-body">
+                        <h4 class="card-title">Documents</h4>
+                        <p class="card-text">
+                            <a href="{{ url_for('static',filename='dictionnaire_donnees.png') }}" class="nav-link active">Dictionnaire de données</a>
+                            <a href="{{ url_for('static',filename='MCDVisio.png') }}" class="nav-link active">MCD</a>
+                            <a href="{{ url_for('static',filename='MLDVisio.png') }}" class="nav-link active">MLD</a>
+                            <a href="#" class="nav-link active">Finances </a>
+                            <a href="#" class="nav-link active">RH</a>
+                            <a href="#" class="nav-link active">Calendrier de l'équipe</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="card border-dark mb-3" style="min-width:20rem;max-width: 25rem;">
+                  <div class="card-header">BADGEUSE</div>
+                      <div class="card-body">
+                        <h4 class="card-title">Timbrage</h4>
+                          <table class="table table-hover">
+                            {% if data %}
+                                <head>
+                                      <tr class="table-dark">
+                                        <th class="align-middle">
+                                            Temps effectué :
+                                        </th>
+                                        <th class="align-middle">
+                                            Temps de pause :
+                                        </th>
+                                        <th class="align-middle">
+                                            Soldes heures à hier :
+                                        </th>
+                                    </tr>
+                                 </head>
+                            {% endif %}
+                            {% for row in data %}
+                                <tbody>
+                                    <tr class="table-dark">
+                                        <td class="align-middle">
+                                            {{ row.date_et_heure_horaires }}
+                                        </td>
+                                        <td class="align-middle">
+                                            {{ row.date_et_heure_horaires }}
+                                        </td>
+                                        <td class="align-middle">
+                                            {{ row.date_et_heure_horaires}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                {% else %}
+                                <tbody>
+                                    <tr class="table-dark">
+                                        <td>
+                                            Aucun timbrage.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                            <input type="checkbox" id="_checkbox">
+                            <label style="margin-left: 3rem;" for="_checkbox">
+                                <div id="tick_mark"></div>
+                            </label>
+                      </div>
+                </div>
+                <div class="card border-success mb-3" style="margin: 0 auto;">
+                      <div class="card-header">INFORMATION</div>
+                      <div class="card-body">
+                        <h4 class="card-title">En cours</h4>
+                        <p class="card-text">Je vous présente mon projet pour le module 104. Il n'est pas totalement fini mais je vais le continuer après les examens. Je dois encore m'occuper de la timbreuse</p>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var checkoutHistory = document.getElementById('_checkbox');
+    checkoutHistory.onchange = function() {
+    console.log(checkoutHistory);
+        if (checkoutHistory.checked) {
+            alert("Bon travail ! ");
+        } else {
+            alert("Bonne pause ! ");
+        }
+    }
+    </script>
+{% endblock %}

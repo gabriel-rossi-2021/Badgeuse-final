@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='Bootswatch/bootstrap.min.css') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static',filename='icon_login.png') }}">
+</head>
+	<body style="display: flex;min-height: 722px;background-repeat: no-repeat;">
+        <div class="container"  style="display: flex;flex-direction: column;justify-content: center">
+            <table class="table-primary">
+                <form action="{{ url_for('login') }}" method="POST">
+                    <div class="form-group">
+                    <tr>
+                        <td>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput"  id="username" name="username" placeholder="Nom d'utilisateur">
+                                <label for="floatingInput">Nom d'utilisateur</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe">
+                                <label for="floatingPassword">Mot de passe</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="btn btn-primary" type="submit" id="connexion" name="connexion" value="Connexion">Connexion</button>
+                            <button class="btn btn-danger" type="reset" name="reset" value="Reset">Reset</button>
+                            <div class="msg">{{ msg }}</div>
+                        </td>
+                    </tr>
+                    </div>
+                </form>
+            </table>
+        </div>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %} Afficher Collaborateur {% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				Collaborateur à disposition.
+			</p>
+			 <table class="table table-hover">
+            {% if data %}
+				 <head>
+					  <tr class="table-dark">
+                        <th class="align-middle">
+                            id
+                        </th>
+                        <th class="align-middle">
+                            Nom de famille
+                        </th>
+                        <th class="align-middle">
+                            Prenom
+                        </th>
+                        <th class="align-middle">
+
+                        </th>
+                        <th class="align-middle">
+
+                        </th>
+                    </tr>
+				 </head>
+            {% endif %}
+
+            {% for row in data %}
+					<tr class="table-dark">
+						<td class="align-middle">
+							{{ row.id_collaborateur }}
+						</td>
+						<td class="align-middle">
+							{{ row.nom_famille }}
+						</td>
+                        <td class="align-middle">
+							{{ row.prenom}}
+						</td>
+						<td class="text-center" class="align-middle">
+                            <button class="btn btn-secondary">
+                                <a href="{{ url_for('collaborateur_update_wtf', id_collaborateur_btn_edit_html=row.id_collaborateur) }}">Edit</a>
+                            </button>
+						</td>
+                        {% if session.FK_role == 4 %}
+                        <td class="text-center" class="align-middle">
+                            <button class="btn btn-danger">
+                                <a href="{{ url_for('collaborateur_delete_wtf', id_collaborateur_btn_delete_html=row.id_collaborateur) }}" >Delete</a>
+                            </button>
+						</td>
+                        {% endif %}
+                        {% if session.FK_role == 5  %}
+                        <td class="text-center" class="align-middle">
+                            <button class="btn btn-danger disabled">
+                                <a href="{{ url_for('collaborateur_delete_wtf', id_collaborateur_btn_delete_html=row.id_collaborateur) }}" >Delete</a>
+                            </button>
+						</td>
+                        {% endif %}
+					</tr>
+            {% else %}
+					<tr>
+						<td>
+							Aucun collaborateur.
+						</td>
+						<td>
+							<a class="btn btn-primary" href="{{ url_for('collaborateur_ajouter_wtf') }}" role="button">Ajouter un collaborateur</a>
+						</td>
+					</tr>
+            {% endfor %}
+			</table>
+			<td class="text-center" class="align-middle" style="align-items: center">
+				<a class="btn btn-primary" href="{{ url_for('collaborateur_ajouter_wtf') }}" role="button">Ajouter un collaborateur</a>
+			</td>
+		</div>
+	</div>
+</div>
+{% endblock %}
+

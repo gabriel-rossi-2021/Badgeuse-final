@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %} Afficher Origines {% endblock %}
+{% block content %}
+<div class="container">
+	<div class="col-md-12">
+        <p>
+            Origine(s) des collaborateurs
+        </p>
+		<table class="table table-hover">
+            {% if data %}
+				<head>
+					  <tr class="table-dark">
+                        <th class="align-middle">
+                            id
+                        </th>
+                        <th class="align-middle">
+                            Nom de famille
+                        </th>
+                        <th class="align-middle">
+                            Prenom
+                        </th>
+                        <th class="align-middle">
+
+                        </th>
+                        <th class="align-middle">
+
+                        </th>
+                    </tr>
+				 </head>
+			{% endif %}
+			{% for row in data %}
+			<tbody>
+				<tr class="table-dark">
+					  <th class="align-middle">
+                          {{ row.id_collaborateur }}
+					  </th>
+					  <th class="align-middle">
+                          {{ row.nom_famille|default("", True) }}
+					  </th>
+					  <th class="align-middle">
+                          {{ row.prenom|default("", True) }}
+					  </th>
+					  <th class="align-middle">
+                          <button class="btn btn-secondary">
+                              <a href="{{ url_for('collaborateur_update_wtf', id_collaborateur_btn_edit_html=row.id_collaborateur) }}">Edit</a>
+                          </button>
+					  </th>
+                    {% if session.FK_role == 4 %}
+					  <th class="align-middle">
+                          <button class="btn btn-danger">
+                              <a href="{{ url_for('collaborateur_delete_wtf', id_collaborateur_btn_delete_html=row.id_collaborateur) }}">Delete</a>
+                          </button>
+					  </th>
+                    {% endif %}
+                    {% if session.FK_role == 5 %}
+					  <th class="align-middle">
+                          <button class="btn btn-danger disabled">
+                              <a href="{{ url_for('collaborateur_delete_wtf', id_collaborateur_btn_delete_html=row.id_collaborateur) }}">Delete</a>
+                          </button>
+					  </th>
+                    {% endif %}
+					<tr class="table-dark">
+						<td class="align-middle">
+                            <button class="btn btn-dark">
+                                <a href="{{ url_for('edit_genre_film_selected', id_film_genres_edit_html=row.id_collaborateur) }}">Modifier</a>
+                            </button>
+							</td>
+						<td class="align-middle" colspan="10">
+							{{ row.GenresFilms|default("PAS D'ORIGINES", True) }}
+						</td>
+					</tr>
+				</tr>
+			</tbody>
+			{% else %}
+				<tbody>
+					<tr class="table-dark">
+						<td>
+							Aucune origine.
+						</td>
+						<td>
+							<a class="btn btn-primary" href="{{ url_for('avertissement_sympa_pour_geeks') }}" role="button">Add</a>
+						</td>
+					</tr>
+				</tbody>
+			{% endfor %}
+		</table>
+        <th class="align-middle">
+            <a class="btn btn-primary" href="{{ url_for('origine_collaborateur_ajouter_wtf') }}" role="button">Ajouter une origine</a>
+        </th>
+	</div>
+</div>
+{% endblock %}

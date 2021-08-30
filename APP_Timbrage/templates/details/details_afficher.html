@@ -1,0 +1,117 @@
+{% if session.FK_role == 4 %}
+{% extends "base.html" %}
+{% block title %} Afficher details {% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				Afficher details
+			</p>
+				<table class="table table-hover">
+                    {% if data %}
+                         <head>
+                              <tr class="table-dark">
+                              <th class="align-middle">
+                                    id
+                                </th>
+                                <th class="align-middle">
+                                    Sexe
+                                </th>
+                                <th class="align-middle">
+                                    Rue
+                                </th>
+                                <th class="align-middle">
+                                    Numero Rue
+                                </th>
+                                <th class="align-middle">
+                                    NPA
+                                </th>
+                                <th class="align-middle">
+                                    ville
+                                </th>
+                                <th class="align-middle">
+                                    Pays
+                                </th>
+                                <th class="align-middle">
+                                    telephone
+                                </th>
+                                  <th class="align-middle">
+                                    Date d'entrée
+                                </th>
+                                <th class="align-middle">
+
+                                </th>
+                                <th class="align-middle">
+
+                                </th>
+
+                            </tr>
+                         </head>
+                    {% endif %}
+					{% for row in data %}
+                        <tr class="table-dark">
+                            <td class="align-middle">
+                                {{ row.id_details_collaborateur }}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.sexe }}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.rue}}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.numero_rue}}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.npa}}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.ville}}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.pays}}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.telephone}}
+                            </td>
+                            <td class="align-middle">
+                                {{ row.date_entree_entreprise}}
+                            </td>
+                            <td class="text-center" class="align-middle">
+                                <button class="btn btn-secondary">
+                                    <a href="{{ url_for('details_update_wtf', id_collaborateur_btn_edit_html=row.id_details_collaborateur) }}">Edit</a>
+                                </button>
+                            </td>
+                            <td class="text-center" class="align-middle">
+                                <button class="btn btn-danger">
+                                    <a href="{{ url_for('details_delete_wtf', id_collaborateur_btn_delete_html=row.id_details_collaborateur) }}">Delete</a>
+                                </button>
+                            </td>
+                        </tr>
+                {% else %}
+                        <tr>
+                            <td>
+                                Aucun collaborateur.
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ url_for('details_ajouter_wtf') }}" role="button">Ajouter un details</a>
+                            </td>
+                        </tr>
+                {% endfor %}
+                </table>
+                <td class="text-center" class="align-middle" style="align-items: center">
+                    <a class="btn btn-primary" href="{{ url_for('details_ajouter_wtf') }}" role="button">Ajouter un details</a>
+                </td>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% endif %}
+{% if session.FK_role == 5 %}
+    <h1 style="color: red">Vous n'avez pas les droits pour accèder à cette page.</h1>
+    <button>
+        <a href="{{ url_for('homepage', order_by='ASC', id_horaire_sel=3) }}">Retour à l'accueil</a>
+    </button>
+{% endif %}
+

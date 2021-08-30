@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static',filename='logo_entre.png') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='home.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='Bootswatch/bootstrap.min.css') }}">
+
+	<script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='bootstrap-5.0.0-beta2-dist/js/bootstrap.min.js') }}"></script>
+</head>
+
+
+<body style="background-repeat: no-repeat;">
+{% block header %} {% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarColor01" style="">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link hover" href="{{ url_for('homepage', order_by='ASC', id_horaire_sel=3) }}">Accueil
+                <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
+            {% if session.FK_role == 4  %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                  <div class="dropdown-menu" style="background-color: darkgray">
+                    <a class="dropdown-item" href="{{ url_for('collaborateur_afficher', order_by='ASC', id_collaborateur_sel=0) }}">Collaborateurs</a>
+                    <a class="dropdown-item" href="{{ url_for('details_afficher', order_by='ASC', id_details_sel=0) }}">Details</a>
+                    <a class="dropdown-item" href="{{ url_for('role_identification_afficher', order_by='ASC', id_role_identification_sel=0) }}">Rôle/Identification</a>
+                    <a class="dropdown-item" href="{{ url_for('origine_collaborateurs_afficher', id_details_collaborateurs_sel=0) }}">Origine/Collaborateur</a>
+                  </div>
+                </li>
+            {% endif %}
+          {% if session.FK_role == 5  %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Modérateur</a>
+                  <div class="dropdown-menu" style="background-color: darkgray">
+                    <a class="dropdown-item" href="{{ url_for('collaborateur_afficher', order_by='ASC', id_collaborateur_sel=0) }}">Collaborateurs</a>
+                    <a class="dropdown-item" href="{{ url_for('identification_afficher', order_by='ASC', id_identification_sel=0) }}">Identification</a>
+                    <a class="dropdown-item" href="{{ url_for('origine_collaborateurs_afficher', id_details_collaborateurs_sel=0) }}">Origine/Collaborateur</a>
+                  </div>
+                </li>
+            {% endif %}
+            {% if session.loggedin %}
+                <li class="nav-item">
+                    <a class="nav-link hover" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                    <a class="nav-link hover" href="{{ url_for('login') }}">login</a>
+                </li>
+            {% endif %}
+          </ul>
+          <form class="d-flex" id="form2">
+            <input class="form-control me-sm-2" type="text" id="search" placeholder="Rechercher">
+            <input class="btn btn-secondary my-2 my-sm-0" type="button" id="submit_form" value="Rechercher" onclick="checkInput()">
+          </form>
+        </div>
+      </div>
+    </nav>
+    {% include 'flash_messages.html' %}
+
+    {% block content %}{% endblock %}
+
+    {% block javascript %}
+        <script>
+        function checkInput() {
+                    var query = document.getElementById('search').value;
+                    window.find(query);
+                    return true;
+                }
+        </script>
+    {% endblock %}
+    {% include 'footer.html' %}
+</body>
+</html>
